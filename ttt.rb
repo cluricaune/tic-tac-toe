@@ -36,12 +36,32 @@ module CheckForWin
     else
       false
     end
+  end
 end
 
-class TicTacToe
+class Player
+  attr_reader :name, :xo
+
+  @@player_count = 0
+
+  def initialize(name)
+    @name = name
+    @xo = if @@player_count > 0
+            'O'
+          else
+            'X'
+          end
+  end
+
+  def self.display_player_count
+    @@player_count
+  end
+end
+
+class TicTacToe < Player
   include CheckForWin
   include SingleSpace
-  
+
   attr_accessor :spaces
 
   def initialize
@@ -49,12 +69,8 @@ class TicTacToe
   end
 end
 
-game = TicTacToe.new
+player1 = Player.new('Jake')
+player2 = Player.new('Chad')
 
-game.mark(1, 'X')
-game.mark(3, 'X')
-game.mark(6, 'X')
-
-puts game.vertical_win
-
-puts game.spaces
+puts Player.display_player_count
+puts player1.xo
