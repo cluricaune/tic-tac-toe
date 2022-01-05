@@ -1,13 +1,3 @@
-module SingleSpace
-  def mark(index, input)
-    if input == 'X'
-      spaces[index] = 'X'
-    elsif input == 'O'
-      spaces[index] = 'O'
-    end
-  end
-end
-
 module CheckForWin
   def horizontal_win
     if spaces[0..2].all?('X') || spaces[3..5].all?('X') || spaces[6..8].all?('X')
@@ -56,11 +46,23 @@ class Player
   def self.display_player_count
     @@player_count
   end
+
+  def mark(index, input)
+    if input == 'X'
+      spaces[index] = 'X'
+    elsif input == 'O'
+      spaces[index] = 'O'
+    end
+  end
+
+  def turn
+    puts 'Player 1 mark a spot:'
+    player1.mark(gets.chomp.to_i, player1.xo)
+  end
 end
 
 class TicTacToe < Player
   include CheckForWin
-  include SingleSpace
 
   attr_accessor :spaces
 
@@ -69,8 +71,12 @@ class TicTacToe < Player
   end
 end
 
-player1 = Player.new('Jake')
-player2 = Player.new('Chad')
+game = TicTacToe.new
 
-puts Player.display_player_count
-puts player1.xo
+puts 'Player 1'
+player1 = Player.new(gets.chomp)
+
+puts 'Player 2'
+player2 = Player.new(gets.chomp)
+
+puts game.spaces
